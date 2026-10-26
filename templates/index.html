@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Food Donation System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">SOFTWARE ENGINEERING PBL</p>
+      <h1>Food Donation System</h1>
+      <p class="subtitle">List surplus food, discover donations and manage requests.</p>
+    </div>
+    <span class="header-mark">FDS</span>
+  </header>
+
+  <main class="container">
+    <nav class="tabs" aria-label="Project modules">
+      <button class="tab active" data-tab="donations-panel">Module 1 · Manage Donations</button>
+      <button class="tab" data-tab="discover-panel">Module 2 · Discover & Request</button>
+      <button class="tab" data-tab="requests-panel">Requests</button>
+    </nav>
+
+    <div id="message" class="message" role="status" aria-live="polite"></div>
+
+    <section id="donations-panel" class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">MODULE 1</p>
+          <h2 id="donation-form-title">Add a food donation</h2>
+          <p class="muted">Enter accurate details so recipients can assess the donation.</p>
+        </div>
+      </div>
+
+      <form id="donation-form" class="form-grid">
+        <input type="hidden" id="donation-id">
+        <label>Food name *
+          <input id="food-name" name="food_name" required maxlength="100" placeholder="e.g. Vegetable rice">
+        </label>
+        <label>Category *
+          <select id="category" name="category" required>
+            <option value="">Select category</option>
+            <option>Cooked Meals</option><option>Fruits</option><option>Vegetables</option>
+            <option>Bakery</option><option>Packaged Food</option><option>Other</option>
+          </select>
+        </label>
+        <label>Quantity *
+          <input id="quantity" name="quantity" type="number" min="0.01" step="0.01" required placeholder="e.g. 10">
+        </label>
+        <label>Unit *
+          <select id="unit" name="unit" required>
+            <option value="">Select unit</option><option>servings</option><option>kg</option>
+            <option>packs</option><option>boxes</option><option>litres</option>
+          </select>
+        </label>
+        <label>Expiry date and time *
+          <input id="expiry-datetime" name="expiry_datetime" type="datetime-local" required>
+        </label>
+        <label>Pickup location *
+          <input id="pickup-location" name="pickup_location" required maxlength="200" placeholder="Area or pickup address">
+        </label>
+        <label>Donor name *
+          <input id="donor-name" name="donor_name" required maxlength="100">
+        </label>
+        <label>Donor contact *
+          <input id="donor-contact" name="donor_contact" required minlength="5" maxlength="40" placeholder="Use sample details">
+        </label>
+        <label class="full-width">Additional notes
+          <textarea id="notes" name="notes" rows="2" maxlength="500" placeholder="Allergens or pickup instructions (optional)"></textarea>
+        </label>
+        <div class="form-actions full-width">
+          <button class="button primary" type="submit" id="save-donation-button">Save donation</button>
+          <button class="button secondary hidden" type="button" id="cancel-edit-button">Cancel edit</button>
+        </div>
+      </form>
+
+      <div class="section-heading list-heading">
+        <div><h2>Saved donations</h2><p class="muted">Records stored in SQLite.</p></div>
+        <button class="button secondary" id="refresh-donations">Refresh</button>
+      </div>
+      <div id="manage-donations" class="cards"></div>
+    </section>
+
+    <section id="discover-panel" class="panel hidden">
+      <div class="section-heading">
+        <div><p class="eyebrow">MODULE 2</p><h2>Discover available food</h2>
+          <p class="muted">Search by food name or pickup location.</p></div>
+      </div>
+      <div class="filters">
+        <label class="search-label">Search
+          <input id="search-input" placeholder="Food name or location">
+        </label>
+        <label>Category
+          <select id="category-filter"><option value="">All categories</option></select>
+        </label>
+        <button class="button primary" id="search-button">Search</button>
+        <button class="button secondary" id="clear-search-button">Clear</button>
+      </div>
+      <div id="available-donations" class="cards"></div>
+    </section>
+
+    <section id="requests-panel" class="panel hidden">
+      <div class="section-heading">
+        <div><p class="eyebrow">MODULE 2</p><h2>Donation requests</h2>
+          <p class="muted">For this lab demo, request decisions are managed here without login.</p></div>
+        <button class="button secondary" id="refresh-requests">Refresh</button>
+      </div>
+      <div id="requests-list" class="cards"></div>
+    </section>
+  </main>
+
+  <footer>Food Donation System · College PBL demonstration</footer>
+
+  <dialog id="request-dialog">
+    <form id="request-form" method="dialog">
+      <div class="dialog-heading">
+        <div><p class="eyebrow">DONATION REQUEST</p><h2>Request this donation</h2></div>
+        <button type="button" class="icon-button" id="close-dialog" aria-label="Close">×</button>
+      </div>
+      <p id="request-food-title" class="muted"></p>
+      <input type="hidden" id="request-donation-id">
+      <label>Recipient name *
+        <input id="recipient-name" required maxlength="100">
+      </label>
+      <label>Recipient contact *
+        <input id="recipient-contact" required minlength="5" maxlength="40" placeholder="Use sample details">
+      </label>
+      <div class="form-actions">
+        <button class="button primary" type="submit">Submit request</button>
+        <button class="button secondary" type="button" id="cancel-request">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</body>
+</html>
