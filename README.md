@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Food Donation and Request Management System
 
 A simple Software Engineering PBL application with two modules:
@@ -51,3 +52,5 @@ The application creates `instance/food_donation.db` on first startup. To reset t
 
 ## Important demo limitation
 This is a college lab prototype. It does not include login, role-based authorization, real notifications, or production security hardening. Use sample contact details for demonstration. Do not expose the development server publicly.
+=======
+>>>>>>> e7c06ea11dde1edbb4222dfeeb335e8ea819d860
